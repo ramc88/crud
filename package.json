@@ -1,0 +1,57 @@
+{
+    "author": "Ramiro Clavijo",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./services/server",
+        "test": "jest --coverage --coverageDirectory=output/coverage/jest"
+    },
+    "jest": {
+        "reporters": [
+            "default",
+            [
+              "jest-junit",
+              {
+                "outputDirectory": "output/coverage/jest",
+                "outputName": "report.html"
+              }
+            ]
+        ]
+    },
+    "dependencies": {
+        "@awaitjs/express": "^0.9.0",
+        "@faker-js/faker": "^6.3.1",
+        "compress": "^0.99.0",
+        "compression": "^1.7.4",
+        "config": "^3.3.7",
+        "cookie-parser": "~1.4.3",
+        "cors": "^2.8.5",
+        "crypto": "^1.0.1",
+        "express": "~4.16.0",
+        "express-mongo-sanitize": "^2.0.2",
+        "express-rate-limit": "^6.4.0",
+        "faker": "^6.6.6",
+        "fs": "0.0.1-security",
+        "helmet": "^4.4.1",
+        "http-errors": "~1.6.2",
+        "https": "^1.0.0",
+        "is-my-json-valid": "^2.20.5",
+        "json2csv": "^5.0.6",
+        "jsonwebtoken": "^8.5.1",
+        "k-mongoose-morgan": "0.0.7",
+        "k-request": "0.0.4",
+        "mongoose": "^5.11.19",
+        "mongoose-unique-validator": "^2.0.3",
+        "morgan": "~1.9.0",
+        "passport": "^0.6.0",
+        "passport-http-bearer": "^1.0.1",
+        "request": "^2.88.2",
+        "uuidv4": "^6.2.8"
+    },
+    "devDependencies": {
+        "jest": "^28.1.0",
+        "jest-junit": "^13.2.0",
+        "mockingoose": "^2.15.2",
+        "nock": "^13.2.4"
+    }
+}
