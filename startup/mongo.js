@@ -4,8 +4,12 @@ const config = require('config');
 const seedDb = require('../scripts/seedDb');
 
 function init() {
-  const url = process.env.MONGO || config.get('db.url');
-  console.log('mongourl: ', url)
+  let url = config.get('db.url');
+
+  // reads environment vars for db connection
+  if (process.env.DB_HOST) {
+    url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?authSource=admin`
+  }
 
   if (!url) throw new Error('No db url specified');
 

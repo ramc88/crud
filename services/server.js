@@ -10,6 +10,7 @@ const passport = require('passport');
 */
 
 const port = process.env.PORT || '4000';
+console.log('app listening on port: ', port)
 app.set('port', port);
 
 

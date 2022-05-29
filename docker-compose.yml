@@ -1,53 +1,47 @@
-version: 1
+version: '3.1'
 services:
-  nginx:
-    image: nginx:mainline-alpine
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-        - "80:80"
-    volumes:
-        - web-root:/var/www/html
-        - ./nginx-conf:/etc/nginx/conf.d
-
-    depends_on:
-        - backend
-    networks:
-        - backend_net
-  
   mongodb:
     image: mongo:4.4
     restart: unless-stopped
     ports:
-        - 27017:27017
+      - 27017
     volumes:
-        - ~/apps/mongo:/data/db
+      - db:/data/db
     environment:
-        - MONGO_INITDB_ROOT_USERNAME=mongoroot
-        - MONGO_INITDB_ROOT_PASSWORD=pa$$w
-    networks:
-        -backend_net
+      - MONGO_INITDB_ROOT_USERNAME=mongoroot
+      - MONGO_INITDB_ROOT_PASSWORD=pass135
+      - MONGO_INITDB_ROOT_DATABASE=database
 
   backend:
-    container_name: backend
+    container_name: crud
     build:
       context: .
       dockerfile: Dockerfile
-    image: backend
+    image: crud
     restart: unless-stopped
-    cpus: 2
-    mem_limit: 4000
+    environment:
+      - DB_HOST=mongodb
+      - DB_USER=mongoroot
+      - DB_PASSWORD=pass135
+      - DB_NAME=database
+      - DB_PORT=27017
+      - PORT=4000
     ports:
-      - "3000:3000"
+      - 4000
     depends_on:
       - mongodb
-    networks:
-      - backend_net
 
-  redis:
-    image: "redis:alpine"
-    networks:
-      - backend_net
+  nginx:
+    build:
+      context: ./nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
+volumes:
+  db:
 networks:
-  backend_net:
+  default:
+    name: priv-net

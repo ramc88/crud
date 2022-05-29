@@ -7,7 +7,6 @@ const hashIt = function(data) {
 }
 
 const sign = function(data) {
-  console.log(config)
   return jwt.sign(data, config.secret, { algorithm: 'HS256' });
 }
 

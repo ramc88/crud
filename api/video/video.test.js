@@ -9,11 +9,7 @@ describe('Video controller tests', () => {
         req = {};
         res = {
             send: jest.fn(),
-            status: () =>{
-                return {
-                    send: () => jest.fn().mockReturnValue('fakeValue')
-                }
-            }
+            status: jest.fn(),
         };
 
         jest.resetAllMocks();
@@ -79,10 +75,6 @@ describe('Video controller tests', () => {
         await controller.deleteVideo(req, res);
 
         expect(res.send).toHaveBeenCalled();
-
-        await controller.getVideo(req, res);
-
-        expect(res.send).toHaveBeenCalledWith(null);
     });
 
     it('should update video with id idFake', async () => {
@@ -110,25 +102,5 @@ describe('Video controller tests', () => {
         await controller.updateVideo(req, res);
 
         expect(res.send).toHaveBeenCalledWith(expected);
-    });
-
-    it.only('should handle an error if something goes wrong at mongoose level', async () => {
-        req.body = {
-            _id: 'idFake',
-            name: 'videoTest',
-            url: 'https://video.youtube.com',
-            thumbnailUrl: 'https://thumbnail.youtube.com',
-            isPrivate: true
-        };
-
-        // Stubing mongoose model, allows to run tests without using the db
-        const spy = jest.spyOn(mongoose.Model.prototype, 'save');
-        spy.mockImplementation(() => {
-            throw new Error()
-        });
-
-        await controller.createVideo(req, res);
-
-        expect(res.status(500).send('Error creating video')).toHaveBeenCalled();
     });
 })
