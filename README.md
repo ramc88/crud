@@ -15,7 +15,7 @@ npm install
 
 ## Usage
 
-For running the app locally, you can run it with ```npm start``` (if you have a mongodb instance running at port 27017, in case you want to run it using Docker just use ```docker-compose up```.
+For running the app locally, you can run it with ```npm start``` if you have a mongodb instance running at port 27017, in case you want to run it using Docker just use ```docker-compose up```.
 
 ## Test
 
